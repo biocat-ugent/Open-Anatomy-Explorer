@@ -1,0 +1,27 @@
+<div class="container h-100">
+  <app-back-header headerTitle="Create Model" backPath=".."></app-back-header>
+
+  <div class="d-flex flex-column">
+    <label><b>Model name <span class="text-danger">*</span></b></label>
+    <app-editable-field [(editedProperty)]="modelName" [isSimpleInput]="true"></app-editable-field>
+
+    <label class="mt-1"><b>Category <span class="text-danger">*</span></b></label>
+    <app-editable-field [(editedProperty)]="modelCategory" [isSimpleInput]="true"></app-editable-field>
+
+    <label class="mt-1"><b>Object file</b></label>
+    <input class="form-control" type="file" accept=".obj,.object" (change)="fileChange($event)">
+
+    <div class="mt-4 mb-4" [ngClass]="{'cursor-not-allowed': isUploading}">
+      <button class="btn btn-outline-primary w-100" [ngClass]="{'btn-outline-secondary': isUploading}"
+              [disabled]="isUploading" (click)="saveModel()">Create
+      </button>
+    </div>
+    <p *ngIf="isUploading">
+      <ngb-progressbar [animated]="true" [showValue]="true" [striped]="true" type="info"
+                       [value]="uploadProgress"></ngb-progressbar>
+    </p>
+    <ngb-alert *ngIf="error" type="danger" [dismissible]="false">
+      {{errorMessage}}
+    </ngb-alert>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+@import "src/global";
+
+.sidebar {
+  background: $global-bg-color;
+  color: white;
+  height: 100%;
+}
+
+.table-labels > th, td {
+  border: 1px solid var(--bs-gray);
+  padding: 0;
+}
+
+.label_color_indicator {
+  width: 1.5rem;
+}
+
+tr td:first-child {
+  width: 1%;
+  white-space: nowrap;
+}

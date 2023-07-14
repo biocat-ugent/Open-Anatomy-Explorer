@@ -1,0 +1,12 @@
+<div class="container h-100">
+  <app-back-header headerTitle="Showing quiz instances of {{quizName}}" backPath="../../"></app-back-header>
+
+  <app-filter-header-dashboard searchHeaderType="Quiz instances" hintType="quiz instance" hintSuffix="invite code"
+                               [showOwnerToggle]="false"
+                               [customAddBtnHandler]="createQuizInstance"
+                               (searchQueryChanged)="searchQueryChange($event)"></app-filter-header-dashboard>
+
+  <app-quiz-instance-table [modelId]="this.modelId" [quizId]="this.quizId" [currentPage]="currentPage"
+                           [inviteCodeSearchQuery]="inviteCodeSearchQuery"
+                           (deleteData)="deleteQuizInstanceEventHandler($event)"></app-quiz-instance-table>
+</div>

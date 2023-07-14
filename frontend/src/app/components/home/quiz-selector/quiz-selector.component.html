@@ -1,0 +1,15 @@
+<div *ngIf="totalItems > 0; else noQuizzes">
+  <select class="form-select" size="10" aria-label="Select label" (change)="itemSelectionEventHandler()" [(ngModel)]="selectedQuiz">
+    <option *ngFor="let item of items" [value]="item.id" [ngValue]="item">{{item.name}}</option>
+  </select>
+
+  <!-- Adapted from https://ng-bootstrap.github.io/#/components/pagination/examples -->
+  <ngb-pagination *ngIf="totalItems > 100" [collectionSize]="totalItems" [pageSize]="100" [(page)]="currentPage"
+                  class="mt-2 d-flex justify-content-center"
+                  (pageChange)="pageChangeEventHandler($event)"></ngb-pagination>
+</div>
+
+<ng-template #noQuizzes>
+  No quiz instances found.
+</ng-template>
+

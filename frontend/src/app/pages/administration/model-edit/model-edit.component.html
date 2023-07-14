@@ -1,0 +1,60 @@
+<div class="container h-100">
+  <app-back-header headerTitle="Edit Model {{currentModel?.name || modelId}}" backPath="../../"></app-back-header>
+
+  <div *ngIf="currentModel !== undefined" class="d-flex flex-column">
+    <label><b>Model name</b></label>
+    <app-editable-field [(editedProperty)]="currentModel.name"></app-editable-field>
+
+    <label class="mt-1"><b>Category</b></label>
+    <app-editable-field [(editedProperty)]="currentModel.category"></app-editable-field>
+
+    <label class="mt-1"><b>Object file</b></label>
+    <div *ngIf="hasObject" class="d-flex gap-1">
+      <span>Action:</span>
+      <button type="button" class="ms-1 btn btn-outline-dark btn-sm" title="Delete"
+              (click)="deleteObjectEventHandler()"><i class="bi bi-trash-fill"></i> Delete
+      </button>
+      <button type="button" class="ms-1 btn btn-outline-dark btn-sm" title="Preview" (click)="showPreview = true"><i
+        class="bi bi-eye-fill"></i> Preview
+      </button>
+    </div>
+    <div *ngIf="!hasObject">
+      <input class="form-control" type="file" accept=".obj,.object" (change)="fileChange($event)">
+    </div>
+
+    <label *ngIf="hasObject" class="mt-1"><b>Labels & position</b></label>
+    <div *ngIf="hasObject" class="d-flex gap-1">
+      <span>Action:</span>
+      <button type="button" class="ms-1 btn btn-outline-dark btn-sm" title="Edit" routerLink="../labels">
+        <i class="bi bi-pencil-fill"></i> Edit
+      </button>
+    </div>
+
+
+    <div class="mt-4 mb-4" [ngClass]="{'cursor-not-allowed': isUploading}">
+      <button class="btn btn-outline-primary w-100" [ngClass]="{'btn-outline-secondary': isUploading}"
+              [disabled]="isUploading" (click)="saveModelChanges()">Save changes
+      </button>
+    </div>
+    <p *ngIf="isUploading">
+      <ngb-progressbar [animated]="true" [showValue]="true" [striped]="true" type="info"
+                       [value]="uploadProgress"></ngb-progressbar>
+    </p>
+    <ngb-alert *ngIf="error" type="danger" [dismissible]="false">
+      {{errorMessage}}
+    </ngb-alert>
+    <ngb-alert *ngIf="success && uploadSuccess" type="success" [dismissible]="false">
+      Successfully saved Model changes.
+    </ngb-alert>
+
+    <app-renderer *ngIf="showPreview && currentModel != undefined" [modelId]="modelId" [previewMode]="true"
+                  [initialCameraPosition]="currentModel.cameraPosition == undefined ? {x: -300, y: 0, z: 0} : {x: currentModel.cameraPosition[0], y: currentModel.cameraPosition[1], z: currentModel.cameraPosition[2]}"
+                  [initialCameraTarget]="currentModel.cameraTarget == undefined ? {x: 0, y: 0, z: 0} : {x: currentModel.cameraTarget[0], y: currentModel.cameraTarget[1], z: currentModel.cameraTarget[2]}"
+                  [modelRotation]="currentModel.modelRotation == undefined ? {x: 0, y: 0, z: 0} : {x: currentModel.modelRotation[0], y: currentModel.modelRotation[1], z: currentModel.modelRotation[2]}"
+    ></app-renderer>
+  </div>
+
+  <ngb-alert *ngIf="error && currentModel === undefined" type="danger" [dismissible]="false">
+    Error loading model
+  </ngb-alert>
+</div>

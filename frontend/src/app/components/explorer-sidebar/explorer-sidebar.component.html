@@ -1,0 +1,57 @@
+<div class="sidebar mh-100">
+  <div class="d-flex flex-column mh-100 h-100" *ngIf="!modelLoadingError; else loadingError">
+    <div *ngIf="model" class="mt-2 mb-3 text-center">
+      <h5>{{model.name}}</h5>
+    </div>
+
+    <div *ngIf="labels.length > 0" class="text-center mb-2">Labels</div>
+
+    <div *ngIf="labels.length === 0" class="text-center">This model does not have labels</div>
+
+    <div class="ms-3 me-3 overflow-auto">
+      <table class="overflow-hidden table-labels w-100">
+        <tbody class="w-100">
+        <tr *ngFor="let label of labels" class="w-100">
+          <td>
+            <div class="ms-2 me-2" (click)="toggleLabel(label)">
+              <i *ngIf="label.isVisible; else hidden" class="bi bi-eye"></i>
+              <ng-template #hidden>
+                <i class="bi bi-eye-slash"></i>
+              </ng-template>
+            </div>
+          </td>
+          <td><span class="p-1">{{label.label.name}}</span></td>
+          <td class="label_color_indicator" [ngStyle]="{'background-color': label.label.colour}"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div *ngIf="totalLabels > environment.DEFAULT_PAGE_SIZE" class="mt-2">
+      <div class="d-flex align-items-center ms-3 me-3">
+        <button type="button" class="flex-grow-0 btn btn-primary" (click)="paginationChange(false)"
+                [disabled]="currentPage === 1" [ngClass]="{'btn-secondary': currentPage === 1}"><i
+          class="bi bi-chevron-left"></i></button>
+        <div class="flex-grow-1 text-center">Page {{currentPage}}/{{totalPageCount}}</div>
+        <button type="button" class="flex-grow-0 btn btn-primary" (click)="paginationChange(true)"
+                [disabled]="currentPage === totalPageCount"
+                [ngClass]="{'btn-secondary': currentPage === totalPageCount}"><i class="bi bi-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <div class="flex-grow-1 d-flex flex-column justify-content-end ms-auto me-auto p-3">
+      <h5>User info</h5>
+      <div>You are logged in as <b>{{auth.getUsername()}}</b> as a{{role.isAdmin() ? 'n' : ''}}
+        <b>{{role.getHighestRole()}}</b></div>
+    </div>
+  </div>
+
+  <ng-template #loadingError>
+    <div class="flex-grow-1">
+      <div class="mt-2 mb-3 text-center">
+        <h5 class="text-danger">Error loading Model</h5>
+      </div>
+    </div>
+  </ng-template>
+</div>

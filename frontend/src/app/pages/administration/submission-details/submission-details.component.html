@@ -1,0 +1,8 @@
+<div class="container h-100">
+  <app-back-header headerTitle="Submission details of {{ownerUserId}}" backPath="../.."></app-back-header>
+
+  <div *ngFor="let pair of questionResponsePairs">
+    <app-response-card [modelId]="modelId" [questionResponsePair]="pair"></app-response-card>
+  </div>
+
+</div>

@@ -1,0 +1,17 @@
+<div *ngIf="labels.length === 0 && (userIsModelOwner || role.isAdmin())">
+  <p>No labels found. Add an object file and add labels to the model: <a routerLink="../../edit">edit model</a></p>
+</div>
+
+<div *ngIf="labels.length === 0 && !userIsModelOwner && !role.isAdmin()">
+  <p>No labels found. Please request the model owner to add labels to the model.</p>
+</div>
+
+<select class="form-select" size="10" aria-label="Select label" [(ngModel)]="selectedLabel"
+        (change)="labelSelectionEventHandler()">
+  <option *ngFor="let label of labels" [value]="label.id" [ngValue]="label.id">{{label.name}}</option>
+</select>
+
+<!-- Adapted from https://ng-bootstrap.github.io/#/components/pagination/examples -->
+<ngb-pagination *ngIf="totalLabelItems > 100" [collectionSize]="totalLabelItems" [pageSize]="100" [(page)]="currentPage"
+                class="mt-2 d-flex justify-content-center"
+                (pageChange)="pageChangeEventHandler($event)"></ngb-pagination>

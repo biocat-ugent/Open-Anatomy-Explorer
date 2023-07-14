@@ -1,0 +1,19 @@
+<div class="mb-2">
+  <div *ngIf="!isSimpleInput && !editMode" class="flex-grow-1 d-flex gap-1 align-items-center">
+    <div>{{editedProperty}}</div>
+    <button type="button" class="btn btn-outline-dark btn-sm" title="Edit" (click)="editMode = true">
+      <i class="bi bi-pencil-fill"></i> Edit
+    </button>
+  </div>
+  <div *ngIf="editMode || isSimpleInput" class="flex-grow-1 d-flex gap-1 align-items-center">
+    <div class="flex-grow-1">
+      <input *ngIf="!isSimpleInput" type="text" class="form-control" [(ngModel)]="editedProperty">
+      <input *ngIf="isSimpleInput" type="text" class="form-control" [(ngModel)]="editedProperty" (change)="editDone()">
+    </div>
+    <div class="flex-grow-0" *ngIf="!isSimpleInput">
+      <button type="button" class="btn btn-outline-dark btn-sm" title="Done" (click)="editDone()">
+        <i class="bi bi-check"></i> Done
+      </button>
+    </div>
+  </div>
+</div>

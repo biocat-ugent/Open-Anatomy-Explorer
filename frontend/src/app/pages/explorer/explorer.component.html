@@ -1,0 +1,14 @@
+<div class="explorer-wrapper">
+  <div class="h-100 w-100 d-flex">
+    <app-renderer *ngIf="modelId !== undefined && model != undefined" class="explorer-renderer" [previewMode]="true"
+                  [cameraFarPlane]="2000"
+                  [initialCameraPosition]="model.cameraPosition == undefined ? {x: -300, y: 0, z: 0} : {x: model.cameraPosition[0], y: model.cameraPosition[1], z: model.cameraPosition[2]}"
+                  [initialCameraTarget]="model.cameraTarget == undefined ? {x: 0, y: 0, z: 0} : {x: model.cameraTarget[0], y: model.cameraTarget[1], z: model.cameraTarget[2]}"
+                  [modelRotation]="model.modelRotation == undefined ? {x: 0, y: 0, z: 0} : {x: model.modelRotation[0], y: model.modelRotation[1], z: model.modelRotation[2]}"
+                  [modelId]="modelId"></app-renderer>
+
+    <app-explorer-sidebar *ngIf="modelId !== undefined" class="explorer-sidebar overflow-auto" [modelId]="modelId"
+                          [renderer]="rendererComponent"></app-explorer-sidebar>
+  </div>
+</div>
+

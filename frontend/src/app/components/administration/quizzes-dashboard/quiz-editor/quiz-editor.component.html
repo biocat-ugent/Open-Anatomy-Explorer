@@ -1,0 +1,89 @@
+<ngb-alert *ngIf="error" class="mb-3" type="danger" [dismissible]="false">{{errorMessage}}</ngb-alert>
+
+<div class="d-flex align-items-center gap-2">
+  <input type="text" class="form-control" id="quiz_name_input" placeholder="Quiz name" [(ngModel)]="quizName">
+  <div class="form-check form-switch flex-shrink-0">
+    <input class="form-check-input" type="checkbox" role="switch" id="shuffleSwitch" [(ngModel)]="shuffleQuestions">
+    <label class="form-check-label" for="shuffleSwitch">
+      Shuffle questions for each participant
+    </label>
+  </div>
+  <button class="btn btn-outline-success flex-shrink-0" type="button" (click)="saveQuizBtnHandler()">Save quiz</button>
+</div>
+
+<div class="mt-2 d-flex flex-row gap-3">
+  <button (click)="addLocateQuestion()" type="button" class="btn btn-outline-dark flex-grow-1"
+          [disabled]="questions.length >= 100"><i
+    class="bi bi-plus-lg"></i> Locate question
+  </button>
+  <button (click)="addNameQuestion()" type="button" class="btn btn-outline-dark flex-grow-1"
+          [disabled]="questions.length >= 100"><i
+    class="bi bi-plus-lg"></i> Name question
+  </button>
+  <button (click)="addFreeFormQuestion()" type="button" class="btn btn-outline-dark flex-grow-1"
+          [disabled]="questions.length >= 100"><i
+    class="bi bi-plus-lg"></i> Free-form question
+  </button>
+</div>
+
+<div class="mt-2 mb-3">
+  <div *ngFor="let question of questions" class="mt-2">
+    <div *ngIf="question.questionType === QuestionType.LOCATE" class="card">
+      <div class="card-body">
+        <div class="card-title d-flex justify-content-between">
+          <h5>Locate question</h5>
+          <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeQuestion(question)"><i
+            class="bi bi-trash"></i></button>
+        </div>
+        <div class="d-flex flex-row justify-content-center gap-2">
+          <app-label-selector class="flex-grow-1" [modelId]="modelId" [selectedLabel]="question.labelId"
+                              [userIsModelOwner]="isCurrentUserModelOwner"
+                              (selectedLabelChange)="question.labelId = $event"></app-label-selector>
+          <div class="flex-grow-1">
+            <label class="form-label">Question</label>
+            <input type="text" class="form-control" placeholder="i.e. Locate nose" [(ngModel)]="question.textPrompt">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="question.questionType === QuestionType.NAME" class="card">
+      <div class="card-body">
+        <div class="card-title d-flex justify-content-between">
+          <h5>Name region question</h5>
+          <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeQuestion(question)"><i
+            class="bi bi-trash"></i></button>
+        </div>
+        <div class="d-flex flex-row justify-content-center gap-2">
+          <app-label-selector class="flex-grow-1" [modelId]="modelId" [selectedLabel]="question.labelId"
+                              [userIsModelOwner]="isCurrentUserModelOwner"
+                              (selectedLabelChange)="question.labelId = $event"></app-label-selector>
+          <div class="flex-grow-1">
+            <label class="form-label">Question</label>
+            <input type="text" class="form-control" disabled [ngModel]="question.textPrompt">
+            <label class="mt-1 form-label">Answer</label>
+            <input type="text" class="form-control" placeholder="i.e. Nose" [(ngModel)]="question.textAnswer">
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="question.questionType === QuestionType.FREE_FORM" class="card">
+      <div class="card-body">
+        <div class="card-title d-flex justify-content-between">
+          <h5>Free-form question</h5>
+          <button type="button" class="btn btn-sm btn-outline-danger" (click)="removeQuestion(question)"><i
+            class="bi bi-trash"></i></button>
+        </div>
+        <div class="d-flex flex-row justify-content-center gap-2">
+          <div class="flex-grow-1">
+            <label class="form-label">Question</label>
+            <input type="text" class="form-control" [(ngModel)]="question.textPrompt"
+                   placeholder="i.e. Give the definition of ...">
+            <label class="mt-1 form-label">Answer</label>
+            <input type="text" class="form-control" [(ngModel)]="question.textAnswer"
+                   placeholder="i.e. The definition is ...">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<div class="container h-100">
+  <app-back-header headerTitle="Showing submissions of {{quizInstanceId}}" backPath="../../"></app-back-header>
+
+  <app-filter-header-dashboard searchHeaderType="Submissions" hintType="" hintSuffix="student name"
+                               [showOwnerToggle]="false"
+                               [showAddButton]="false"
+                               (searchQueryChanged)="searchQueryChange($event)"></app-filter-header-dashboard>
+
+  <app-instance-submissions-table [modelId]="modelId" [quizId]="quizId" [quizInstanceId]="quizInstanceId"
+                                  [currentPage]="currentPage" [studentSearchQuery]="studentSearchQuery"
+                                  (deleteData)="deleteSubmission($event)"></app-instance-submissions-table>
+</div>

@@ -1,0 +1,67 @@
+<div class="sidebar">
+  <div class="d-flex flex-column h-100">
+    <div *ngIf="!quizLoadingError" class="flex-grow-1">
+      <div *ngIf="currentQuiz" class="mt-2 mb-3 text-center">
+        <h5>{{currentQuiz.name}}</h5>
+      </div>
+
+      <div *ngIf="questions && questions.length > 0">
+        <div *ngIf="!isUserStarted" class="text-center">
+          <button type="button" class="btn btn-primary" (click)="startQuiz()">Start</button>
+        </div>
+
+        <div *ngIf="isUserStarted">
+          <div class="d-flex align-items-center ms-3 me-3">
+            <button type="button" class="flex-grow-0 btn btn-primary" [disabled]="currentQuestionNumber === 1"
+                    [ngClass]="{'btn-secondary': currentQuestionNumber === 1}" (click)="previousQuestion()"><i
+              class="bi bi-chevron-left"></i></button>
+            <div class="flex-grow-1 text-center">Question {{currentQuestionNumber}}/{{questions.length}}</div>
+            <button type="button" class="flex-grow-0 btn btn-primary"
+                    [disabled]="currentQuestionNumber === questions.length"
+                    [ngClass]="{'btn-secondary': currentQuestionNumber === questions.length}" (click)="nextQuestion()">
+              <i
+                class="bi bi-chevron-right"></i></button>
+          </div>
+
+
+          <div class="d-flex flex-column ms-3 me-3 mt-2">
+            <!--            <div>[Debug] Question Type: {{this.currentQuestion.questionType}}</div>-->
+            <p><b>{{currentQuestion.textPrompt}}</b></p>
+
+            <div [ngSwitch]="currentQuestion.questionType">
+              <div *ngSwitchCase="QuestionType.FREE_FORM">
+                <input class="form-control" type="text" placeholder="Answer"
+                       [(ngModel)]="questionResponses[currentQuestionNumber - 1].textAnswer">
+              </div>
+              <div *ngSwitchCase="QuestionType.LOCATE">
+                <p>Use the Controls and Labels menu to locate the area.</p>
+              </div>
+              <div *ngSwitchCase="QuestionType.NAME">
+                <input class="form-control" type="text" placeholder="Answer"
+                       [(ngModel)]="questionResponses[currentQuestionNumber - 1].textAnswer">
+              </div>
+            </div>
+            <button *ngIf="currentQuestionNumber === questions.length" type="button" class="mt-2 btn btn-primary"
+                    (click)="submitResponses()">Submit
+            </button>
+            <ngb-alert *ngIf="alertMessage" class="mt-2" [type]="isSuccess ? 'success' : 'danger'"
+                       [dismissible]="false">{{alertMessage}}
+            </ngb-alert>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="quizLoadingError" class="flex-grow-1">
+      <div class="mt-2 mb-3 text-center">
+        <h5 class="text-danger">Error loading Quiz</h5>
+      </div>
+    </div>
+
+    <div class="flex-grow-0 ms-auto me-auto p-3">
+      <h5>User info</h5>
+      <div>You are logged in as <b>{{auth.getUsername()}}</b> as a{{role.isAdmin() ? 'n' : ''}}
+        <b>{{role.getHighestRole()}}</b></div>
+    </div>
+  </div>
+</div>

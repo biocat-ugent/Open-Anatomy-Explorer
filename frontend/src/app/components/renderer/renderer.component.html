@@ -1,0 +1,14 @@
+<div #wrapper id="wrapper" class="wrapper">
+  <div *ngIf="!isModelLoaded" class="overlay-spinner">
+    <div *ngIf="!modelLoadError" class="spinner"></div>
+    <div *ngIf="modelLoadError" class="d-flex flex-column align-items-center">
+      <span class="text-danger h4">Something went wrong loading the model</span>
+      <span class="text-danger h5">{{modelLoadErrorMessage}}</span>
+    </div>
+  </div>
+  <div #renderer_gui_wrapper class="renderer-gui-wrapper"></div>
+  <canvas #canvas id="canvas" class="renderer-canvas w-100 h-100 cursor-camera" (mousedown)="onMouseDown($event)"
+          (mouseup)="onMouseUp($event)" (mousemove)="onMouseMove($event)"
+          [ngClass]="{'cursor-crosshair': !isCameraTool}">
+  </canvas>
+</div>

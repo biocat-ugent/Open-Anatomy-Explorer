@@ -1,0 +1,54 @@
+<div [ngSwitch]="questionResponsePair.question.questionType">
+  <div *ngSwitchCase="QuestionType.LOCATE" class="card mb-2">
+    <div class="card-body">
+      <h5>Locate label: {{labelName}}</h5>
+      <div class="d-flex gap-3 justify-content-between">
+        <div>
+          <div>Correct vertices count: <b>{{locateCorrectVerticesCount}}</b></div>
+          <div>Response vertices count: <b>{{locateResponseVerticesCount}}</b></div>
+          <br>
+          <div>Intersection count: <b>{{intersectionLength}}</b></div>
+          <div>Union count: <b>{{unionLength}}</b></div>
+        </div>
+        <div>
+          <div>Total overlap percentage: <b>{{intersectionLength / unionLength | percent:'1.2-2'}}</b></div>
+          <div>Correct annotation percentage:
+            <b>{{intersectionLength / locateCorrectVerticesCount | percent:'1.2-2'}}</b></div>
+          <a type="button" class="btn btn-outline-dark btn-sm" title="View overlap"
+             routerLink="../overlap/{{questionResponsePair.response?.questionId}}/{{questionResponsePair.question.labelId}}"
+             target="_blank">
+            <i class="bi bi-intersect"></i> View overlap
+          </a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <div *ngSwitchCase="QuestionType.NAME" class="card mb-2">
+    <div class="card-body">
+      <h5>Name label: {{labelName}}</h5>
+      <div class="d-flex gap-3 justify-content-between">
+        <div class="flex-shrink-0">
+          <div>Correct answer: <b>{{questionResponsePair.question.textAnswer}}</b></div>
+        </div>
+        <div class="text-end">
+          <p class="text-break">Response: <b>{{questionResponsePair.response?.textAnswer}}</b></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngSwitchCase="QuestionType.FREE_FORM" class="card mb-2">
+    <div class="card-body">
+      <h5>Free form</h5>
+      <div class="d-flex gap-3 justify-content-between">
+        <div class="flex-shrink-0">
+          <div>Question: {{questionResponsePair.question.textPrompt}}</div>
+          <div>Correct answer: <b>{{questionResponsePair.question.textAnswer}}</b></div>
+        </div>
+        <div class="text-end">
+          <div class="text-break">Response: <b>{{questionResponsePair.response?.textAnswer}}</b></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,18 @@
+@import "src/global";
+
+.quiz-take-renderer {
+  flex: 1;
+}
+
+.quiz-take-sidebar {
+  width: 25%;
+  min-width: 25%;
+  max-width: 25%;
+}
+
+.quiz-take-wrapper {
+  background: $global-bg-color;
+  color: white;
+  height: 100vh;
+  width: 100%;
+}

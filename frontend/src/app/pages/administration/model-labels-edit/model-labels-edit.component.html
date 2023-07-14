@@ -1,0 +1,121 @@
+<div class="container h-100">
+  <app-back-header headerTitle="Edit Labels of Model {{model != undefined ? (model.name || model.id) : ''}}"
+                   backPath="../edit"></app-back-header>
+
+  <div>
+    <app-renderer *ngIf="modelId != undefined && model != undefined" [cameraFarPlane]="2000" [modelId]="modelId"
+                  [initialCameraPosition]="model.cameraPosition == undefined ? {x: -300, y: 0, z: 0} : {x: model.cameraPosition[0], y: model.cameraPosition[1], z: model.cameraPosition[2]}"
+                  [initialCameraTarget]="model.cameraTarget == undefined ? {x: 0, y: 0, z: 0} : {x: model.cameraTarget[0], y: model.cameraTarget[1], z: model.cameraTarget[2]}"
+                  [modelRotation]="model.modelRotation == undefined ? {x: 0, y: 0, z: 0} : {x: model.modelRotation[0], y: model.modelRotation[1], z: model.modelRotation[2]}"
+                  (labelVerticesChangeEvent)="editedVerticesChangeEventHandler($event)"
+                  (labelVerticesColorChangeEvent)="editedColorChangeEventHandler($event)"></app-renderer>
+  </div>
+
+  <div>
+
+    <hr>
+    <!--Alerts-->
+    <div class="mt-1">
+      <ngb-alert *ngFor="let message of infoMessages" type="info" [dismissible]="false">{{message.message}}</ngb-alert>
+      <ngb-alert *ngIf="showSuccess" type="success" [dismissible]="false">Successfully saved</ngb-alert>
+      <ngb-alert *ngIf="errorMessage" type="danger" [dismissible]="false">{{errorMessage}}</ngb-alert>
+    </div>
+
+    <!--Add label-->
+    <div class="d-flex w-100 gap-2">
+      <button *ngIf="!isChangingModelRotation" type="button" class="flex-grow-1 flex-basis-0 btn btn-outline-primary"
+              (click)="editModelRotation()"><i
+        class="bi bi-camera"></i> Edit model rotation
+      </button>
+
+      <button *ngIf="isChangingModelRotation" type="button" class="flex-grow-1 flex-basis-0 btn btn-outline-success"
+              (click)="saveModelRotation()"><i
+        class="bi bi-camera"></i> Save model rotation
+      </button>
+
+      <button [disabled]="isAddingLabel || isEditingLabel"
+              [ngClass]="{'btn-secondary': isAddingLabel || isEditingLabel}" type="button"
+              class="flex-grow-1 flex-basis-0 btn btn-primary"
+              (click)="addLabelBtnHandler()">Add Label
+      </button>
+    </div>
+    <div *ngIf="isAddingLabel" class="mt-2 d-flex flex-row">
+      <input type="text" class="form-control" [(ngModel)]="newLabel.name" placeholder="Label name">
+      <button class="ms-1 btn btn-outline-dark btn-sm" title="Save" (click)="saveNewLabel()"><i
+        class="bi bi-cloud-upload"></i></button>
+      <button class="ms-1 btn btn-outline-dark btn-sm" title="Cancel" (click)="cancelNewLabel()"><i
+        class="bi bi-x-octagon"></i></button>
+    </div>
+
+    <!--Label table-->
+    <table class="table mt-3 w-100">
+      <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Modified at</th>
+        <th scope="col">Color</th>
+        <th scope="col">Action</th>
+      </tr>
+      </thead>
+      <tbody class="w-100">
+      <tr *ngFor="let label of currentLabels" class="w-100 tr-labels">
+        <td>
+          <input type="text" class="form-control" [(ngModel)]="label.name" (ngModelChange)="editLabel(label)"
+                 [disabled]="!label.edited && isEditingLabel">
+        </td>
+        <td title="{{label.lastModifiedAt | date: 'long'}}">
+          {{(label.lastModifiedAt ? label.lastModifiedAt : label.createdAt) | date:'dd/MM/y h:mm a'}}
+        </td>
+        <td class="label_color_indicator" [style.background-color]="label.colour"></td>
+        <td>
+          <div>
+            <button *ngIf="!isEditingLabel" class="ms-1 btn btn-outline-dark btn-sm" title="Edit"
+                    (click)="editLabel(label)"><i
+              class="bi bi-pencil-fill"></i>
+            </button>
+            <button *ngIf="label.edited" class="ms-1 btn btn-outline-dark btn-sm" title="Save"
+                    (click)="updateLabel(label)"><i
+              class="bi bi-cloud-upload"></i>
+            </button>
+            <button *ngIf="label.edited" class="ms-1 btn btn-outline-dark btn-sm" title="Cancel"
+                    (click)="cancelLabelEdit()"><i class="bi bi-x-octagon"></i></button>
+            <button *ngIf="!isEditingLabel" type="button" class="ms-3 btn btn-outline-dark btn-sm" title="Delete"
+                    (click)="deleteLabel(label)">
+              <i
+                class="bi bi-trash-fill"></i>
+            </button>
+          </div>
+        </td>
+      </tr>
+      </tbody>
+    </table>
+
+    <!-- Adapted from https://ng-bootstrap.github.io/#/components/pagination/examples -->
+    <ngb-pagination [collectionSize]="totalLabelItems" [pageSize]="100" [(page)]="currentPage" [boundaryLinks]="true"
+                    class="d-flex justify-content-center" (pageChange)="pageChangeEventHandler($event)">
+      <ng-template ngbPaginationPages let-page let-pages="pages">
+        <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+          <div class="mb-3 d-flex flex-nowrap px-2">
+            <label id="paginationInputLabel" for="paginationInput" class="col-form-label me-2 ms-1">Page</label>
+            <input
+              #i
+              type="text"
+              inputmode="numeric"
+              pattern="[0-9]*"
+              class="form-control custom-pages-input"
+              id="paginationInput"
+              [value]="page"
+              (keyup.enter)="inputPageEventHandler(i)"
+              (blur)="inputPageEventHandler(i)"
+              (input)="formatPageInput($any($event).target)"
+              aria-labelledby="paginationInputLabel paginationDescription"
+              style="width: 2.5rem"
+            />
+            <span id="paginationDescription" class="col-form-label text-nowrap px-2"> of {{pages.length}}</span>
+          </div>
+        </li>
+      </ng-template>
+    </ngb-pagination>
+
+  </div>
+</div>

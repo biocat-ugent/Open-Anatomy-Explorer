@@ -1,0 +1,57 @@
+<table class="table">
+  <thead>
+  <tr>
+    <th scope="col">Student</th>
+    <th scope="col">Created at</th>
+    <th scope="col">Action</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let data of tableData">
+    <td>{{data.ownerUserId}}</td>
+    <td title="{{data.createdAt | date:'long'}}">
+      {{data.createdAt | date:'dd/MM/y h:mm a'}}
+    </td>
+    <td>
+      <button *ngIf="role.isTeacher()" class="ms-1 btn btn-outline-dark btn-sm"
+              routerLink="{{data.id}}/details">Details
+      </button>
+
+      <button *ngIf="role.isTeacher()" class="ms-1 btn btn-outline-dark btn-sm"
+              title="Delete" (click)="deleteData.emit(data.id)"><i class="bi bi-trash-fill"></i>
+      </button>
+    </td>
+  </tr>
+  </tbody>
+</table>
+
+<div *ngIf="tableData.length === 0">
+  No results found.
+</div>
+
+<!-- Adapted from https://ng-bootstrap.github.io/#/components/pagination/examples -->
+<ngb-pagination [collectionSize]="totalTableDataItems" [pageSize]="100" [(page)]="currentPage" [boundaryLinks]="true"
+                class="d-flex justify-content-center" (pageChange)="pageChangeEventHandler($event)">
+  <ng-template ngbPaginationPages let-page let-pages="pages">
+    <li class="ngb-custom-pages-item" *ngIf="pages.length > 0">
+      <div class="mb-3 d-flex flex-nowrap px-2">
+        <label id="paginationInputLabel" for="paginationInput" class="col-form-label me-2 ms-1">Page</label>
+        <input
+          #i
+          type="text"
+          inputmode="numeric"
+          pattern="[0-9]*"
+          class="form-control custom-pages-input"
+          id="paginationInput"
+          [value]="page"
+          (keyup.enter)="inputPageEventHandler(i)"
+          (blur)="inputPageEventHandler(i)"
+          (input)="formatPageInput($any($event).target)"
+          aria-labelledby="paginationInputLabel paginationDescription"
+          style="width: 2.5rem"
+        />
+        <span id="paginationDescription" class="col-form-label text-nowrap px-2"> of {{pages.length}}</span>
+      </div>
+    </li>
+  </ng-template>
+</ngb-pagination>

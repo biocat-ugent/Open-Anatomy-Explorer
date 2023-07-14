@@ -1,0 +1,19 @@
+<div class="container h-100">
+  <app-back-header headerTitle="Showing quizzes of Model {{modelName}}" backPath="../../"></app-back-header>
+
+  <app-filter-header-dashboard searchHeaderType="Quizzes" hintType="quiz"
+                               (showAllChanged)="showAllQuizzesSwitchEventHandler($event)"
+                               (searchQueryChanged)="nameSearchQueryChangeEventHandler($event)"></app-filter-header-dashboard>
+
+  <app-name-table [modelId]="modelId" [backendGetQuizzesFunc]="this.backend.getModelQuizzes"
+                            [currentPage]="currentPage"
+                            [getFromAllUsers]="showFromAllUsers" [nameSearchQuery]="nameSearchQuery"
+                            (deleteData)="deleteQuizEventHandler($event)">
+
+    <ng-template #customActionsTemplate let-data="data">
+      <button class="btn btn-outline-dark btn-sm" title="Quiz instances" routerLink="{{data.id}}/instances">
+        <i class="bi bi-clipboard2-check"></i>
+      </button>
+    </ng-template>
+  </app-name-table>
+</div>

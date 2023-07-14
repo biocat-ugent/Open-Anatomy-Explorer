@@ -1,0 +1,67 @@
+<div class="container">
+  <div class="d-flex align-items-center justify-content-between flex-wrap mb-3">
+    <div class="d-flex flex-wrap">
+      <img class="ugent-logo" src="/assets/img/logo_UGent_EN_RGB_2400_color-on-white.png" alt="UGent">
+      <img class="fac-logo" src="/assets/img/icon_UGent_GE_EN_RGB_2400_color-on-white.png"
+           alt="Faculty of Medicine and Health Sciences">
+    </div>
+    <div>
+      <div *ngIf="!(isLoggedIn$|async)">
+        <button class="btn btn-outline-primary" (click)="auth.login()">
+          <i class="bi bi-shield-lock"></i> Log In
+        </button>
+      </div>
+      <div *ngIf="isLoggedIn$|async" class="d-flex gap-2 align-items-center">
+        <span>Currently logged in as <u>{{auth.getUsername()}}</u>.</span>
+        <button *ngIf="role.isTeacher() || role.isAdmin()" class="btn btn-outline-primary" routerLink="/dashboard">
+          <i class="bi bi-speedometer2"></i> Dashboard
+        </button>
+        <button class="btn btn-outline-primary" (click)="auth.logout()">
+          <i class="bi bi-box-arrow-right"></i> Log Out
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <h4>Welcome to Open Anatomy Explorer</h4>
+  <p>The anatomy exploration and quizzing platform</p>
+
+  <br>
+  <br>
+
+  <div *ngIf="isLoggedIn$|async" class="d-flex flex-column gap-4">
+
+
+    <div class="flex-grow-1">
+      <p>Select a model or provide an ID to explore.</p>
+      <div class="d-flex gap-3">
+        <div class="flex-grow-1 flex-basis-0">
+          <app-model-selector (selectedModelChange)="exploreId = $event"></app-model-selector>
+        </div>
+        <div class="flex-grow-1 flex-basis-0">
+          <input type="text" class="form-control" [(ngModel)]="exploreId" [ngClass]="{'is-invalid': exploreInvalid}">
+          <button type="button" class="mt-1 w-100 btn btn-outline-primary btn-sm action-btn" title="Explore"
+                  (click)="explore()">
+            <i class="bi bi-rocket-takeoff"></i> Explore!
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="flex-grow-1">
+      <p>Select a quiz or provide an invite code.</p>
+      <div class="d-flex gap-3">
+        <div class="flex-grow-1 flex-basis-0">
+          <app-quiz-selector (selectedQuizChange)="quizId = $event"></app-quiz-selector>
+        </div>
+        <div class="flex-grow-1 flex-basis-0">
+          <input type="text" class="form-control" [(ngModel)]="quizId" [ngClass]="{'is-invalid': quizInvalid}">
+          <button type="button" class="mt-1 w-100 btn btn-outline-primary btn-sm action-btn" title="Take quiz"
+                  (click)="takeQuiz()">
+            <i class="bi bi-clipboard2-check"></i> Quiz!
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

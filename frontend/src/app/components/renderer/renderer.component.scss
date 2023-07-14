@@ -1,0 +1,24 @@
+@import "src/global";
+
+.wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.renderer-gui-wrapper {
+  position: absolute;
+  right: 0.5rem;
+  top: 0.5rem;
+  z-index: 100;
+}
+
+
+.cursor-camera {
+  cursor: move;
+}
+
+.cursor-crosshair {
+  cursor: crosshair !important;
+}

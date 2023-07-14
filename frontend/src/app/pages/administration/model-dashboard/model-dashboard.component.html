@@ -1,0 +1,34 @@
+<div class="container h-100">
+
+
+  <app-filter-header-dashboard searchHeaderType="Models" hintType="model"
+                               (showAllChanged)="showAllModelsSwitchEventHandler($event)"
+                               (searchQueryChanged)="nameSearchQueryChangeEventHandler($event)"></app-filter-header-dashboard>
+
+
+  <app-model-import-export (refreshModelsTable)="this.dashboardTable.refreshData(this.showFromAllUsers, this.nameSearchQuery)"></app-model-import-export>
+
+  <app-name-table [backendGetModelsFunc]="this.backend.getModels" [currentPage]="currentPage"
+                  [getFromAllUsers]="showFromAllUsers" [nameSearchQuery]="nameSearchQuery"
+                  (deleteData)="deleteModelEventHandler($event)">
+    <ng-template #customActionsTemplate let-data="data">
+      <a type="button" class="btn btn-outline-dark btn-sm" title="Open Model in explorer"
+         routerLink="/explorer/{{data.id}}" target="_blank">
+        <i class="bi bi-eye-fill"></i>
+      </a>
+      <button *ngIf="data.ownerUserId === auth.getUsername() || role.isAdmin()"
+              class="ms-1 btn btn-outline-dark btn-sm" title="Export"
+              (click)="exportModelEventHandler(data.id)"><i class="bi bi-file-earmark-arrow-down"></i>
+      </button>
+      <button class="ms-1 btn btn-outline-dark btn-sm" title="Copy Model ID" (click)="clipboard.copy(data.id)">
+        <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24">
+          <path fill="currentColor"
+                d="M9 18q-.825 0-1.412-.587Q7 16.825 7 16V4q0-.825.588-1.413Q8.175 2 9 2h9q.825 0 1.413.587Q20 3.175 20 4v12q0 .825-.587 1.413Q18.825 18 18 18Zm0-2h9V4H9v12Zm-4 6q-.825 0-1.413-.587Q3 20.825 3 20V7q0-.425.288-.713Q3.575 6 4 6t.713.287Q5 6.575 5 7v13h10q.425 0 .713.288q.287.287.287.712t-.287.712Q15.425 22 15 22ZM9 4v12V4Z"/>
+        </svg>
+      </button>
+      <button class="ms-1 btn btn-outline-dark btn-sm" title="Quizzes" routerLink="{{data.id}}/quizzes">
+        <i class="bi bi-card-heading"></i>
+      </button>
+    </ng-template>
+  </app-name-table>
+</div>
