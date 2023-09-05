@@ -96,10 +96,15 @@ class LabelResource {
         @PathParam("labelId") labelId: String,
         input: List<Int>
     ): Response {
-        val vertices =
-            LabelVertices.find(Eq("labelId", labelId).toQueryDocument()).firstResult().awaitSuspending()
-                ?.copy(data = input)
-                ?: LabelVertices(labelId, input)
+        // copy() does not copy the ObjectId, that causes the creation of a new entity instead of updating the current one
+//        val vertices =
+//            LabelVertices.find(Eq("labelId", labelId).toQueryDocument()).firstResult().awaitSuspending()
+//                ?.copy(data = input)
+//                ?: LabelVertices(labelId, input)
+
+        var vertices = LabelVertices.find(Eq("labelId", labelId).toQueryDocument()).firstResult().awaitSuspending()
+        vertices?.data = input
+        vertices = vertices ?: LabelVertices(labelId, input)
 
         LabelVertices.persistOrUpdate(vertices).awaitSuspending()
         return Response.noContent().build()
