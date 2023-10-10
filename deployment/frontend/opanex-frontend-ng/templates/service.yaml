@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "opanex-frontend-ng.fullname" . }}
+  labels:
+    {{- include "opanex-frontend-ng.labels" . | nindent 4 }}
+spec:
+  type: {{ .Values.service.type }}
+  ports:
+    - port: {{ .Values.service.port }}
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    {{- include "opanex-frontend-ng.selectorLabels" . | nindent 4 }}

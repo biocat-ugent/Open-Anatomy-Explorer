@@ -1,0 +1,62 @@
+# https://github.com/bitnami/charts/tree/main/bitnami/keycloak
+global:
+  storageClass: "vmware-sc" # TODO
+
+auth:
+  adminUser: kcadmin
+  adminPassword: xxx # TODO Create a strong password here
+
+postgresql:
+  auth:
+    username: opanex
+    password: xxx # TODO Create a strong password here
+    database: opanex
+
+proxy: edge
+
+ingress:
+  enabled: true
+  ingressClassName: traefik # TODO
+  hostname: hostname # TODO
+  path: /auth
+  pathType: Prefix
+
+extraEnvVars:
+  - name: KEYCLOAK_PROXY_ADDRESS_FORWARDING
+    value: "true"
+  - name: KEYCLOAK_FRONTEND_URL
+    value: "https://hostname/auth" # TODO
+  - name: KC_HOSTNAME
+    value: "hostname" # TODO
+  - name: KC_HOSTNAME_PATH
+    value: "/auth"
+  - name: KC_HOSTNAME_STRICT
+    value: "true"
+  - name: KC_HTTP_RELATIVE_PATH
+    value: "/auth"
+
+livenessProbe:
+  enabled: false
+customLivenessProbe:
+  failureThreshold: 3
+  httpGet:
+    path: /auth
+    port: http
+    scheme: HTTP
+  initialDelaySeconds: 300
+  periodSeconds: 1
+  successThreshold: 1
+  timeoutSeconds: 5
+
+readinessProbe:
+  enabled: false
+customReadinessProbe:
+  failureThreshold: 3
+  httpGet:
+    path: /auth/realms/master
+    port: http
+    scheme: HTTP
+  initialDelaySeconds: 30
+  periodSeconds: 10
+  successThreshold: 1
+  timeoutSeconds: 1

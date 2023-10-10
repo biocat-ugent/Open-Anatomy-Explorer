@@ -1,0 +1,15 @@
+{{- $fullName := include "opanex-frontend-ng.fullname" . -}}
+{{- $svcPort := .Values.service.port -}}
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: {{ $fullName }}-route
+spec:
+  entryPoints:
+  - web
+  routes:
+  - match: Host(`{{ .Values.opanexConfig.host }}`) && !PathPrefix(`/{context:(auth|api|q)($|/.*$)}`)
+    kind: Rule
+    services:
+    - name: {{ $fullName }}
+      port: {{ $svcPort }}
