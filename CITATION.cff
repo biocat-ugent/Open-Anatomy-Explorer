@@ -1,0 +1,161 @@
+cff-version: 1.2.0
+title: Open Anatomy Explorer
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Vicky
+    family-names: Vandenbossche
+    email: Vicky.vandenbossche@ugent.be
+    affiliation: >-
+      Department of Human Structure and Repair, Ghent
+      University, Ghent, Belgium
+    orcid: 'https://orcid.org/0000-0002-1039-0589'
+  - given-names: Michiel
+    family-names: Van Kenhove
+    orcid: 'https://orcid.org/0000-0003-3623-2754'
+    affiliation: >-
+      IDLab, Ghent University- imec, iGent tower
+      Technologiepark, Ghent, Belgium
+  - given-names: Noeska
+    family-names: Smit
+    orcid: 'https://orcid.org/0000-0002-3719-4625'
+    affiliation: >-
+      Department of Medical Visualization, Bergen
+      University, Bergen, Norway
+  - given-names: Wouter
+    family-names: Willaert
+    affiliation: >-
+      Department of Human Structure and Repair, Ghent
+      University, Ghent, Belgium
+  - given-names: Filip
+    family-names: De Turck
+    affiliation: >-
+      IDLab, Ghent University- imec, iGent tower
+      Technologiepark, Ghent, Belgium
+    orcid: 'https://orcid.org/0000-0003-4824-1199'
+  - given-names: Bruno
+    family-names: Volckaert
+    affiliation: >-
+      IDLab, Ghent University- imec, iGent tower
+      Technologiepark, Ghent, Belgium
+    orcid: 'https://orcid.org/0000-0003-0575-5894'
+  - given-names: Martin
+    family-names: Valcke
+    affiliation: >-
+      Department of Educational Studies, Ghent University,
+      Ghent, Belgium
+    orcid: 'https://orcid.org/0000-0001-9544-4197'
+  - given-names: Emmanuel
+    family-names: Audenaert
+    affiliation: >-
+      Department of Human Structure and Repair, Ghent
+      University, Ghent, Belgium; Department of Orthopedic
+      Surgery and Traumatology, Ghent University Hospital,
+      Ghent, Belgium; Department of Trauma and Orthopedics,
+      Addenbrooke's Hospital, Cambridge University Hospitals
+      NHS Foundation Trust, Cambridge, UK; Department of
+      Electromechanics, Op3Mech Research Group, University
+      of Antwerp, Antwerp, Belgium
+    orcid: 'https://orcid.org/0000-0001-5508-6743'
+identifiers:
+  - type: doi
+    value: 10.1080/17453054.2024.2446764
+    description: Journal Article
+repository-code: 'https://github.com/biocat-ugent/Open-Anatomy-Explorer/'
+abstract: >-
+  Anatomy learning has traditionally relied on drawings,
+  plastic models, and cadaver dissections/prosections to
+  help students understand the three-dimensional (3D)
+  relationships within the human body. However, the
+  landscape of anatomy education has been transformed with
+  the introduction of digital media. In this light, the Open
+  Anatomy Explorer (OPANEX) was developed. It includes two
+  user interfaces (UI): one for students and one for
+  administrators. The administrator UI offers features such
+  as uploading and labelling of 3D models, and customizing
+  3D settings. Additionally, the OPANEX facilitates content
+  sharing between institutes through its import-export
+  functionality. To evaluate the integration of OPANEX
+  within the existing array of learning resources, a survey
+  was conducted as part of the osteology course at Ghent
+  University, Belgium. The survey aimed to investigate the
+  frequency of use of five learning resources, attitudes
+  towards 3D environments, and the OPANEX user experience.
+  Analysis revealed that the OPANEX was the most frequently
+  used resource. Students' attitudes towards 3D learning
+  environments further supported this preference. Feedback
+  on the OPANEX user experience indicated various reasons
+  for its popularity, including the quality of the models,
+  regional annotations, and customized learning content. In
+  conclusion, the outcomes underscore the educational value
+  of the OPANEX, reflecting students' positive attitudes
+  towards 3D environments in anatomy education.
+keywords:
+  - Anatomy
+  - visualisation
+  - 3D learning environment
+  - open-source
+  - web-based
+preferred-citation:
+  type: article
+  authors:
+  - given-names: Vicky
+    family-names: Vandenbossche
+    email: Vicky.vandenbossche@ugent.be
+    affiliation: >-
+      Department of Human Structure and Repair, Ghent
+      University, Ghent, Belgium
+    orcid: 'https://orcid.org/0000-0002-1039-0589'
+  - given-names: Michiel
+    family-names: Van Kenhove
+    orcid: 'https://orcid.org/0000-0003-3623-2754'
+    affiliation: >-
+      IDLab, Ghent University- imec, iGent tower
+      Technologiepark, Ghent, Belgium
+  - given-names: Noeska
+    family-names: Smit
+    orcid: 'https://orcid.org/0000-0002-3719-4625'
+    affiliation: >-
+      Department of Medical Visualization, Bergen
+      University, Bergen, Norway
+  - given-names: Wouter
+    family-names: Willaert
+    affiliation: >-
+      Department of Human Structure and Repair, Ghent
+      University, Ghent, Belgium
+  - given-names: Filip
+    family-names: De Turck
+    affiliation: >-
+      IDLab, Ghent University- imec, iGent tower
+      Technologiepark, Ghent, Belgium
+    orcid: 'https://orcid.org/0000-0003-4824-1199'
+  - given-names: Bruno
+    family-names: Volckaert
+    affiliation: >-
+      IDLab, Ghent University- imec, iGent tower
+      Technologiepark, Ghent, Belgium
+    orcid: 'https://orcid.org/0000-0003-0575-5894'
+  - given-names: Martin
+    family-names: Valcke
+    affiliation: >-
+      Department of Educational Studies, Ghent University,
+      Ghent, Belgium
+    orcid: 'https://orcid.org/0000-0001-9544-4197'
+  - given-names: Emmanuel
+    family-names: Audenaert
+    affiliation: >-
+      Department of Human Structure and Repair, Ghent
+      University, Ghent, Belgium; Department of Orthopedic
+      Surgery and Traumatology, Ghent University Hospital,
+      Ghent, Belgium; Department of Trauma and Orthopedics,
+      Addenbrooke's Hospital, Cambridge University Hospitals
+      NHS Foundation Trust, Cambridge, UK; Department of
+      Electromechanics, Op3Mech Research Group, University
+      of Antwerp, Antwerp, Belgium
+    orcid: 'https://orcid.org/0000-0001-5508-6743'
+  doi: "10.1080/17453054.2024.2446764"
+  journal: "Journal of Visual Communication in Medicine"
+  title: "The Open Anatomy Explorer – a journey towards accessible open-source 3D learning environments"
+  year: 2025
